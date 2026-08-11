@@ -7,7 +7,7 @@ app.use(express.json());
 
 // Backend API
 app.get('/api', (req,res)=> res.json({message:"S.D.R PREMIUM LIBRARY API LIVE 🚀", status:"LIVE"}));
-app.get('/', (req,res)=> res.sendFile(path.join(__dirname,'index.html')));
+app.get('/', (req,res)=> ;res.sendFile(path.join(__dirname,'SDR-APP-FINAL-PWA.html'))
 
 let students = [];
 let seats = {};
