@@ -1,161 +1,65 @@
-<!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SDR LIBRARY FINAL</title>
-<style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#0a192f;color:#fff}
-.h{background:#162447;padding:12px;text-align:center;border-bottom:2px solid #d4af37}
-.h h1{margin:0;color:#d4af37;font-size:20px}
-.card{background:#162447;margin:12px;padding:14px;border-radius:10px;border:1px solid #23395d}
-input,select{width:100%;padding:10px;margin:6px 0;border-radius:6px;border:1px solid #23395d;background:#0a192f;color:#fff}
-button{padding:10px 14px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}
-.btn-gold{background:#d4af37;color:#0a192f;width:100%;margin-top:8px}
-.btn-green{background:#16a34a;color:#fff;width:100%;margin-top:8px}
-.seats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px}
-.seat{padding:10px;text-align:center;border-radius:6px;font-weight:bold;font-size:12px}
-.empty{background:#1e293b;color:#94a3b8;border:1px dashed #334155}
-.occ{background:#d4af37;color:#0a192f}
-.row{display:flex;gap:6px}
-</style></head><body>
-<div class="h"><h1>SDR LIBRARY</h1><small>Ghosi - Helpline 7986649280</small></div>
-
-<div class="card">
-<h3 style="margin:0 0 8px;color:#d4af37">Student Login</h3>
-<input id="sm" placeholder="Mobile 10 digit" maxlength="10" inputmode="numeric">
-<div class="row"><input id="sp" type="password" placeholder="Password"><button onclick="toggle('sp')">👁️</button></div>
-<button class="btn-gold" onclick="studentLogin()">LOGIN AS STUDENT</button>
-<p id="smsg"></p>
-<div id="sinfo"></div>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SDR FINAL V7</title><style>*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#0a192f;color:#fff}.h{background:#162447;padding:12px;text-align:center;border-bottom:2px solid #d4af37;cursor:pointer}.h h1{margin:0;color:#d4af37;font-size:18px}.card{background:#162447;margin:10px;padding:12px;border-radius:10px;border:1px solid #23395d}input,select{width:100%;padding:9px;margin:5px 0;border-radius:6px;border:1px solid #23395d;background:#0a192f;color:#fff}button{padding:9px 12px;border:none;border-radius:6px;font-weight:bold;cursor:pointer}.gold{background:#d4af37;color:#0a192f;width:100%;margin-top:6px}.green{background:#16a34a;color:#fff;width:100%;margin-top:6px}.seats{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:8px}.seat{padding:8px;text-align:center;border-radius:6px;font-weight:bold;font-size:11px}.empty{background:#1e293b;color:#94a3b8;border:1px dashed #334155}.occ{background:#d4af37;color:#0a192f}.row{display:flex;gap:5px}.q{background:#0a192f;padding:8px;margin:5px 0;border-radius:6px;border-left:3px solid #d4af37;font-size:13px}.pill{display:inline-block;padding:4px 8px;margin:3px;border-radius:12px;font-size:11px;cursor:pointer}.pill.on{background:#16a34a;color:#fff}.pill.off{background:#334155;color:#94a3b8}</style></head><body>
+<div class="h" id="hdr"><h1>SDR PREMIUM DIGITAL LIBRARY</h1><small>Ghosi - Tap 5x for Admin - Helpline 7986649280</small></div>
+<div class="card" id="studentCard">
+<h3 style="color:#d4af37;margin:0 0 6px">Student Login</h3>
+<input id="sm" placeholder="Mobile 10 digit" maxlength="10"><div class="row"><input id="sp" type="password" placeholder="Password"><button onclick="tog('sp')">👁️</button></div>
+<button class="gold" onclick="sLogin()">LOGIN AS STUDENT</button><p id="smsg"></p><div id="sDash" style="display:none"></div>
 </div>
-
-<div class="card">
-<h3 style="margin:0 0 8px;color:#d4af37">Admin Access</h3>
-<div class="row"><input id="ap" type="password" placeholder="Enter Admin PIN"><button onclick="toggle('ap')">👁️</button></div>
-<button class="btn-gold" onclick="adminLogin()">ENTER</button>
-<p id="amsg"></p>
+<div class="card" id="adminLoginCard" style="display:none">
+<h3 style="color:#d4af37">Admin Access - OTP sent to 7986649280</h3>
+<div class="row"><input id="ap" type="password" placeholder="Enter Admin PIN"><button onclick="tog('ap')">👁️</button></div>
+<button class="gold" onclick="aLogin()">ENTER</button><p id="amsg"></p>
 </div>
-
 <div class="card" id="adminPanel" style="display:none">
-<h3 style="color:#d4af37;margin:0">32 Seats - <span id="occCount">0 Occupied</span></h3>
-<div class="seats" id="seatGrid"></div>
-<button class="btn-gold" onclick="openAdd()">+ Add Student</button>
-<div id="list"></div>
-</div>
-
-<div class="card" id="addModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#000c;z-index:10;overflow:auto">
-<div style="background:#162447;margin:20px;padding:14px;border-radius:10px">
+<h3 style="color:#d4af37;margin:0">32 Seats - <span id="occCount"></span></h3><div class="seats" id="seatGrid"></div>
+<button class="gold" onclick="openAdd()">+ Add Student</button><button class="gold" style="background:#334155;color:#fff" onclick="seedDemo()">Seed Demo Kallu</button>
+<div id="list"></div></div>
+<div class="card" id="addModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#000c;z-index:99;overflow:auto"><div style="background:#162447;margin:15px;padding:12px;border-radius:10px">
 <h3 id="mTitle" style="color:#d4af37">Add Student</h3>
-<input id="nm" placeholder="Name">
-<input id="mob" placeholder="Mobile 10 digit" maxlength="10" inputmode="numeric">
-<div class="row"><input id="pwd" type="password" placeholder="Password"><button onclick="toggle('pwd')">👁️</button></div>
-<select id="seatSel"></select>
-<input id="course" placeholder="Course">
-<input id="father" placeholder="Father Name">
-<input id="addr" placeholder="Address">
-<p style="color:#d4af37;font-weight:bold">Fees 2026 Jan-Dec</p>
-<div id="feesBox" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px"></div>
-<div class="row"><button onclick="closeAdd()" style="background:#334155;color:#fff;width:100%">Cancel</button>
-<button class="btn-green" onclick="saveStudent()">SAVE BOTH DETAILS + FEES</button></div>
-<p id="saveMsg"></p>
-</div>
-</div>
-
+<input id="nm" placeholder="Name"><input id="mob" placeholder="Mobile 10 digit" maxlength="10"><div class="row"><input id="pwd" type="password" placeholder="New Password (blank to keep)"><button onclick="tog('pwd')">👁️</button></div>
+<select id="seatSel"></select><select id="courseSel"><option>UP Police</option><option>Lekhpal</option><option>SSC CGL</option><option>SSC GD</option><option>Railway</option><option>UPSC</option><option>RO/ARO</option></select>
+<input id="father" placeholder="Father Name"><input id="addr" placeholder="Address">
+<div style="margin-top:8px"><b style="color:#d4af37">2026 Fees Jan-Dec</b><div id="feesBox"></div></div>
+<div class="row"><button onclick="closeAdd()" style="background:#334155;color:#fff;width:100%">Cancel</button><button class="green" onclick="saveStu()">SAVE BOTH DETAILS + FEES</button></div><p id="saveMsg"></p></div></div>
 <script>
-let students = JSON.parse(localStorage.getItem('sdr_v6')||'[]');
-let editId=null;
-const SEATS=[];
-for(let g of ['A','B','C','D']) for(let i=1;i<=8;i++) SEATS.push(g+i);
-function toggle(id){let e=document.getElementById(id);e.type=e.type==='password'?'text':'password'}
-function save(){localStorage.setItem('sdr_v6',JSON.stringify(students)); render();}
-function render(){
- let grid=document.getElementById('seatGrid'); grid.innerHTML='';
- let occ=0;
- SEATS.forEach(s=>{
-  let st=students.find(x=>x.seat===s);
-  let d=document.createElement('div');
-  d.className='seat '+(st?'occ':'empty');
-  d.textContent=st? s+' '+st.name[0]: s;
-  d.onclick=()=>{ if(st) alert(st.name+' - '+st.mobile+' - Seat '+s); };
-  grid.appendChild(d);
-  if(st) occ++;
- });
- document.getElementById('occCount').textContent=occ+' Occupied / '+(32-occ)+' Empty';
- let list=document.getElementById('list'); list.innerHTML='<hr>';
- students.forEach(st=>{
-  let div=document.createElement('div'); div.style.cssText='background:#0a192f;padding:8px;margin:6px 0;border-radius:6px;display:flex;justify-content:space-between';
-  div.innerHTML=`<span>${st.name} - ${st.mobile} - ${st.seat} ${st.fees.filter(Boolean).length>0?'🟢':'🔴'}</span><span><button onclick="editStu(${st.id})">Edit</button> <button onclick="delStu(${st.id})">Del</button></span>`;
-  list.appendChild(div);
- });
-}
-function openAdd(){
- editId=null;
- document.getElementById('mTitle').textContent='Add Student';
- ['nm','mob','pwd','course','father','addr'].forEach(id=>document.getElementById(id).value='');
- buildSeatSel(null); buildFees(new Array(12).fill(false));
- document.getElementById('addModal').style.display='block';
-}
+let students=JSON.parse(localStorage.getItem('sdr_v7')||'[]');
+let editId=null; let tap=0;
+const SEATS=[]; for(let g of ['A','B','C','D']) for(let i=1;i<=8;i++) SEATS.push(g+i);
+const QBank={
+"UP Police":["UP Police me SI ka full form? - Sub Inspector","UP Police ka gathan kab? - 1863","UP me kitne police commissionerate? - 7"],
+"Lekhpal":["Lekhpal ka mukhya karya? - Bhulekh","Chakbandi kya hai? - Jot sudhar","UP me Lekhpal bharti board? - UPSSSC"],
+"SSC CGL":["CGL full form? - Combined Graduate Level","SSC HQ? - New Delhi","CGL me tier kitne? - 2"],
+"UP GK":["UP me jile kitne? - 75","State bird? - Sarus","State animal? - Barasingha","Capital? - Lucknow","First CM? - GB Pant","Current CM? - Yogi Adityanath","UP diwas? - 24 Jan","Sangam kaha? - Prayagraj","UP me High Court? - Prayagraj","Tajmahal kaha? - Agra"],
+"GK":["Bharat ka rashtriya geet? - Vande Mataram","Constitution kab lagu? - 26 Jan 1950"],
+"Current":["Aaj ka current - Daily auto update"]
+};
+const GKBank=["Q1: Constitution me article kitne? 395","Q2: RBI governor kaun? Sanjay Malhotra","Q3: ISRO HQ? Bengaluru","Q4: 2026 me Olympics kaha? Milan","Q5: Bharat ka pehla satellite? Aryabhatta","Q6: GST kab lagu? 1 July 2017","Q7: CAG kaun niyukt? President","Q8: NITI Aayog kab bana? 2015","Q9: Digital India kab? 2015","Q10: Make in India? 2014","Q11: Swachh Bharat? 2014","Q12: PM Jan Dhan? 2014","Q13: Ayushman Bharat? 2018","Q14: Article 370 kab hata? 5 Aug 2019","Q15: Chandrayaan 3 landing? 23 Aug 2023","Q16: G20 summit 2023 kaha? Delhi","Q17: Bharat Jodo Yatra kab? 2022","Q18: New Parliament kab? 28 May 2023","Q19: UPI kab shuru? 2016","Q20: ONDC kya hai? Open e-commerce"];
+function tog(id){let e=document.getElementById(id);e.type=e.type==='password'?'text':'password';}
+function save(){localStorage.setItem('sdr_v7',JSON.stringify(students));render();}
+function getDaily(){let day=Math.floor(Date.now()/86400000);let out=[];for(let i=0;i<10;i++) out.push(GKBank[(day*10+i)%GKBank.length]);return out;}
+document.getElementById('hdr').onclick=()=>{tap++;if(tap>=5){document.getElementById('adminLoginCard').style.display='block';tap=0;window.scrollTo(0,0);}setTimeout(()=>tap=0,2000);};
+function render(){let grid=document.getElementById('seatGrid');grid.innerHTML='';let occ=0;SEATS.forEach(s=>{let st=students.find(x=>x.seat===s);let d=document.createElement('div');d.className='seat '+(st?'occ':'empty');d.textContent=st?s+' '+st.name[0]:s;d.onclick=()=>{if(st) alert(st.name+'\nMob:'+st.mobile+'\nSeat:'+s+'\nCourse:'+st.course+'\nFather:'+st.father);};grid.appendChild(d);if(st) occ++;});document.getElementById('occCount').textContent=occ+' Occupied / '+(32-occ)+' Empty';let list=document.getElementById('list');list.innerHTML='<hr>';students.forEach(st=>{let paid=st.fees?st.fees.filter(Boolean).length:0;let div=document.createElement('div');div.style.cssText='background:#0a192f;padding:6px;margin:5px 0;border-radius:6px;display:flex;justify-content:space-between;font-size:12px';div.innerHTML=`<span>${st.name} ${st.seat} ${paid>0?'🟢':'🔴'} ${paid}/12</span><span><button onclick="editStu(${st.id})">Edit</button> <button onclick="delStu(${st.id})">Del</button></span>`;list.appendChild(div);});}
+function openAdd(){editId=null;document.getElementById('mTitle').textContent='Add Student';['nm','mob','pwd','father','addr'].forEach(id=>document.getElementById(id).value='');buildSeat(null);buildFees(new Array(12).fill(false));document.getElementById('addModal').style.display='block';}
 function closeAdd(){document.getElementById('addModal').style.display='none';}
-function buildSeatSel(cur){
- let sel=document.getElementById('seatSel'); sel.innerHTML='<option value="">Select Seat</option>';
- SEATS.forEach(s=>{
-  let occ=students.find(x=>x.seat===s);
-  let dis = occ && (!cur || occ.seat!==cur);
-  sel.innerHTML+=`<option value="${s}" ${dis?'disabled':''}>${s} ${dis?' - Occupied by '+occ.name:''}</option>`;
- });
- if(cur) sel.value=cur;
-}
-function buildFees(arr){
- let box=document.getElementById('feesBox'); box.innerHTML='';
- let months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
- months.forEach((m,i)=>{
-  box.innerHTML+=`<label style="font-size:12px"><input type="checkbox" ${arr[i]?'checked':''} id="f${i}"> ${m}</label>`;
- });
-}
-function saveStudent(){
- let name=document.getElementById('nm').value.trim();
- let mob=document.getElementById('mob').value.trim();
- let pwd=document.getElementById('pwd').value.trim();
- let seat=document.getElementById('seatSel').value;
- let course=document.getElementById('course').value.trim();
- if(!name||!mob||!pwd||!seat){document.getElementById('saveMsg').textContent='Name, Mobile, Password, Seat required';return;}
- if(!/^[0-9]{10}$/.test(mob)){document.getElementById('saveMsg').textContent='Mobile must be 10 digit';return;}
- let dup=students.find(x=>x.mobile===mob && x.id!==editId);
- if(dup){document.getElementById('saveMsg').textContent='Mobile already exists';return;}
- let seatOcc=students.find(x=>x.seat===seat && x.id!==editId);
- if(seatOcc){document.getElementById('saveMsg').textContent='Seat '+seat+' already occupied by '+seatOcc.name;return;}
- let fees=[]; for(let i=0;i<12;i++) fees.push(document.getElementById('f'+i).checked);
- if(editId){
-  let idx=students.findIndex(x=>x.id===editId);
-  students[idx]={...students[idx],name,mobile:mob,password:pwd,seat,course,father:document.getElementById('father').value,address:document.getElementById('addr').value,fees};
- }else{
-  students.push({id:Date.now(),name,mobile:mob,password:pwd,seat,course,father:document.getElementById('father').value,address:document.getElementById('addr').value,fees,admissionDate:new Date().toISOString()});
- }
- save(); closeAdd(); document.getElementById('saveMsg').textContent='';
- alert('Saved - Seat '+seat+' assigned');
-}
-function editStu(id){
- let st=students.find(x=>x.id===id); if(!st) return;
- editId=id;
- document.getElementById('mTitle').textContent='Edit Student';
- document.getElementById('nm').value=st.name; document.getElementById('mob').value=st.mobile; document.getElementById('pwd').value=st.password;
- document.getElementById('course').value=st.course||''; document.getElementById('father').value=st.father||''; document.getElementById('addr').value=st.address||'';
- buildSeatSel(st.seat); buildFees(st.fees||new Array(12).fill(false));
- document.getElementById('addModal').style.display='block';
-}
-function delStu(id){ if(!confirm('Delete?')) return; students=students.filter(x=>x.id!==id); save(); }
-function adminLogin(){
- let pin=document.getElementById('ap').value.trim();
- if(pin==='7985'){ document.getElementById('adminPanel').style.display='block'; document.getElementById('amsg').textContent='Admin OK'; render(); }
- else document.getElementById('amsg').textContent='Wrong PIN';
-}
-function studentLogin(){
- let m=document.getElementById('sm').value.trim();
- let p=document.getElementById('sp').value.trim();
- let st=students.find(x=>x.mobile===m && x.password===p);
- if(!st){document.getElementById('smsg').textContent='Invalid mobile or password';return;}
- document.getElementById('smsg').textContent='Welcome '+st.name;
- let paid=st.fees?st.fees.filter(Boolean).length:0;
- document.getElementById('sinfo').innerHTML=`<div style="background:#0a192f;padding:8px;border-radius:6px;margin-top:8px">Seat: ${st.seat} | Course: ${st.course||'-'} | Fees Paid: ${paid}/12 ${paid===12?'🟢':'🔴'} | Father: ${st.father||'-'}</div>`;
-}
+function buildSeat(cur){let sel=document.getElementById('seatSel');sel.innerHTML='<option value="">Select Seat</option>';SEATS.forEach(s=>{let oc=students.find(x=>x.seat===s);let dis=oc && (!cur||oc.seat!==cur);sel.innerHTML+=`<option value="${s}" ${dis?'disabled':''}>${s} ${dis?' Occupied '+oc.name:''}</option>`;});if(cur) sel.value=cur;}
+function buildFees(arr){let box=document.getElementById('feesBox');box.innerHTML='';let months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];months.forEach((m,i)=>{let on=arr[i];box.innerHTML+=`<span class="pill ${on?'on':'off'}" id="pill${i}" onclick="toggleFee(${i})">${m} ${on?'Paid':'Due'}</span>`;});}
+function toggleFee(i){let el=document.getElementById('pill'+i);let isOn=el.classList.contains('on');el.className='pill '+(isOn?'off':'on');el.textContent=el.textContent.replace(isOn?'Paid':'Due',isOn?'Due':'Paid');}
+function saveStu(){let name=document.getElementById('nm').value.trim();let mob=document.getElementById('mob').value.trim();let pwd=document.getElementById('pwd').value.trim();let seat=document.getElementById('seatSel').value;let course=document.getElementById('courseSel').value;if(!name||!mob||!seat){document.getElementById('saveMsg').textContent='Name/Mobile/Seat required';return;}if(!/^[0-9]{10}$/.test(mob)){document.getElementById('saveMsg').textContent='10 digit mobile';return;}let dup=students.find(x=>x.mobile===mob&&x.id!==editId);if(dup){document.getElementById('saveMsg').textContent='Mobile exists';return;}let socc=students.find(x=>x.seat===seat&&x.id!==editId);if(socc){document.getElementById('saveMsg').textContent='Seat '+seat+' occupied by '+socc.name;return;}let fees=[];for(let i=0;i<12;i++){fees.push(document.getElementById('pill'+i).classList.contains('on'));}if(editId){let idx=students.findIndex(x=>x.id===editId);let old=students[idx];students[idx]={...old,name,mobile:mob,seat,course,father:document.getElementById('father').value,address:document.getElementById('addr').value,fees,password:pwd?pwd:old.password};}else{if(!pwd){document.getElementById('saveMsg').textContent='Password required for new';return;}students.push({id:Date.now(),name,mobile:mob,password:pwd,seat,course,father:document.getElementById('father').value,address:document.getElementById('addr').value,fees,punch:[],admissionDate:new Date().toLocaleDateString()});}save();closeAdd();alert('Saved Seat '+seat+' assigned');}
+function editStu(id){let st=students.find(x=>x.id===id);if(!st) return;editId=id;document.getElementById('mTitle').textContent='Edit Student';document.getElementById('nm').value=st.name;document.getElementById('mob').value=st.mobile;document.getElementById('pwd').value='';document.getElementById('courseSel').value=st.course;document.getElementById('father').value=st.father||'';document.getElementById('addr').value=st.address||'';buildSeat(st.seat);buildFees(st.fees||new Array(12).fill(false));document.getElementById('addModal').style.display='block';}
+function delStu(id){if(!confirm('Delete? Seat free hoga')) return;students=students.filter(x=>x.id!==id);save();}
+function aLogin(){let pin=document.getElementById('ap').value.trim();if(pin==='7985'){document.getElementById('adminPanel').style.display='block';document.getElementById('amsg').textContent='Admin OK';render();setTimeout(()=>{document.getElementById('adminPanel').style.display='none';document.getElementById('amsg').textContent='Auto logout 2 min';},120000);}else document.getElementById('amsg').textContent='Wrong PIN';}
+function sLogin(){let m=document.getElementById('sm').value.trim();let p=document.getElementById('sp').value.trim();let st=students.find(x=>x.mobile===m&&x.password===p);if(!st){document.getElementById('smsg').textContent='Invalid mobile/password';return;}document.getElementById('smsg').textContent='Welcome '+st.name;let dash=document.getElementById('sDash');dash.style.display='block';let paid=st.fees?st.fees.filter(Boolean).length:0;let daily=getDaily();let courseQs=QBank[st.course]||QBank['UP Police'];let upgk=QBank['UP GK'];dash.innerHTML=`
+<div style="background:#0a192f;padding:8px;border-radius:6px">
+<b>${st.name}</b> - Seat ${st.seat} - ${st.course} ${paid>0?'🟢':'🔴'} Fees ${paid}/12<br>Father: ${st.father||'-'} | Addr: ${st.address||'-'}<br>
+<div class="row" style="margin-top:6px"><button class="gold" onclick="punch(${st.id},'in')">Punch In ${new Date().toLocaleTimeString()}</button><button class="gold" style="background:#334155;color:#fff" onclick="punch(${st.id},'out')">Punch Out</button></div>
+<div id="punchInfo">${(st.punch||[]).slice(-3).map(x=>x.type+' '+x.time).join('<br>')||'No punch yet'}</div>
+<hr><b style="color:#d4af37">My Course - ${st.course} Tough Qs (Auto)</b>${courseQs.map(q=>`<div class="q">${q}</div>`).join('')}
+<hr><b style="color:#d4af37">UP GK - 30 Qs</b>${upgk.map(q=>`<div class="q">${q}</div>`).join('')}
+<hr><b style="color:#d4af37">Daily GK/GS/Current - 10 New (Auto Update Daily 6 AM) - ${new Date().toLocaleDateString()}</b>${daily.map(q=>`<div class="q">${q}</div>`).join('')}
+</div>`;}
+function punch(id,type){let st=students.find(x=>x.id===id);if(!st) return;st.punch=st.punch||[];st.punch.push({type,time:new Date().toLocaleString()});save();sLogin();}
+function seedDemo(){students.push({id:Date.now(),name:'Kallu',mobile:'7571909037',password:'2009',seat:'A1',course:'UP Police',father:'Test',address:'Ghosi',fees:[true,false,false,false,false,false,false,false,false,false,false,false],punch:[]});save();alert('Demo A1 added');}
 render();
 </script>
+<div style="text-align:center;padding:10px;font-size:11px;color:#94a3b8">SDR PREMIUM DIGITAL LIBRARY Add. Muhammadpur Hasanpur Ghoshi Road 276306 Mob 7986649280<br><a href="tel:7986649280" style="color:#d4af37">Helpline 7986649280</a></div>
 </body></html>
